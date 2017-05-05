@@ -1,10 +1,6 @@
-﻿using System;
-using System.Reflection;
-using System.Linq;
-using System.Text;
+﻿using System.Reflection;
 using System.Threading.Tasks;
 using Discord.WebSocket;
-using Discord;
 using Discord.Commands;
 
 namespace BeyDiscordBot
@@ -18,7 +14,7 @@ namespace BeyDiscordBot
 		{
 			_client = client;
 			_service = new CommandService();
-			
+
 			_service.AddModulesAsync(Assembly.GetEntryAssembly());
 
 			_client.MessageReceived += HandleCommandAsync;
@@ -33,7 +29,7 @@ namespace BeyDiscordBot
 			SocketCommandContext context = new SocketCommandContext(_client, message);
 			int argPos = 0;
 
-			if(message.HasCharPrefix('^', ref argPos))
+			if (message.HasCharPrefix('^', ref argPos))
 			{
 				IResult result = await _service.ExecuteAsync(context, argPos);
 

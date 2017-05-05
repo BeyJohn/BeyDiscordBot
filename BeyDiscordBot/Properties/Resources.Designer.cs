@@ -79,5 +79,14 @@ namespace BeyDiscordBot.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MzA3Mjk5MTI0NjM2ODExMjY0.C-vblA.Gnt6IYLu1aIspygOdyyR0acSEA0.
+        /// </summary>
+        internal static string Token {
+            get {
+                return ResourceManager.GetString("Token", resourceCulture);
+            }
+        }
     }
 }

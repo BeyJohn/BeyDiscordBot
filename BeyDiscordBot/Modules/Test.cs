@@ -52,7 +52,7 @@ namespace BeyDiscordBot.Modules
 		public async Task ListReminders()
 		{
 			DataSet ds = await FillDataSet($"SELECT * FROM Reminders", "Reminders");
-			if(ds.Tables[0].Rows.Count > 0)
+			if (ds.Tables[0].Rows.Count > 0)
 			{
 				await Context.Channel.SendMessageAsync(string.Join(", ", ds.Tables[0].Rows.OfType<DataRow>().Select(r => r[0].ToString())));
 			}
@@ -62,7 +62,7 @@ namespace BeyDiscordBot.Modules
 		public async Task Remind(string key)
 		{
 			DataSet ds = await FillDataSet($"SELECT * FROM Reminders WHERE key = '{key}'", "Reminders");
-			if(ds.Tables[0].Rows.Count > 0)
+			if (ds.Tables[0].Rows.Count > 0)
 			{
 				DataRow dr = ds.Tables[0].Rows[0];
 				await Context.Channel.SendMessageAsync(dr["message"].ToString());
@@ -77,7 +77,7 @@ namespace BeyDiscordBot.Modules
 			{
 				SQLiteCommand cmd = _con.CreateCommand();
 
-				cmd.CommandText ="UPDATE Reminders SET [message] = @message WHERE [key] = @key;";
+				cmd.CommandText = "UPDATE Reminders SET [message] = @message WHERE [key] = @key;";
 				cmd.Parameters.AddWithValue("@message", message);
 				cmd.Parameters.AddWithValue("@key", key);
 
@@ -91,7 +91,7 @@ namespace BeyDiscordBot.Modules
 			}
 		}
 
-		[Command("removeReminder"), Summary("I will forget some")]
+		[Command("removeReminder"), Summary("I will forget something I was told.")]
 		public async Task RemoveReminder(string key)
 		{
 			SQLiteCommand cmd = _con.CreateCommand();
@@ -121,7 +121,7 @@ namespace BeyDiscordBot.Modules
 			});
 			return ds;
 		}
-		
+
 		private async Task<bool> ExecuteCommand(params SQLiteCommand[] commands)
 		{
 			bool success = false;

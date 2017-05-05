@@ -1,22 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Discord;
 using Discord.WebSocket;
-using Discord.Net.WebSockets;
 using System.IO;
 
 namespace BeyDiscordBot
 {
-	class Program
+	internal class Program
 	{
-		private string _botToken = "INSERT TOKEN HERE";
+		private string _botToken = Properties.Resources.Token;
 		private DiscordSocketClient _client;
 		private CommandHandler _handler;
 
-		static void Main(string[] args)
+		private static void Main(string[] args)
 		=> new Program().StartAsync().GetAwaiter().GetResult();
 
 		public async Task StartAsync()
@@ -36,7 +32,7 @@ namespace BeyDiscordBot
 
 		private void VerifyDatabase()
 		{
-			if(!File.Exists("dbBot.sqlite"))
+			if (!File.Exists("dbBot.sqlite"))
 			{
 				File.WriteAllBytes("dbBot.sqlite", Properties.Resources.dbBot);
 			}

@@ -12,7 +12,7 @@ namespace BeyDiscordBot
 {
 	class Program
 	{
-		private string _botToken = "MzA3Mjk5MTI0NjM2ODExMjY0.C-vblA.Gnt6IYLu1aIspygOdyyR0acSEA0";
+		private string _botToken = "INSERT TOKEN HERE";
 		private DiscordSocketClient _client;
 		private CommandHandler _handler;
 

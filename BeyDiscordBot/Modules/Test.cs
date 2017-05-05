@@ -54,39 +54,38 @@ namespace BeyDiscordBot.Modules
 			DataSet ds = await FillDataSet($"SELECT * FROM Reminders", "Reminders");
 			if (ds.Tables[0].Rows.Count > 0)
 			{
-				await Context.Channel.SendMessageAsync(string.Join(", ", ds.Tables[0].Rows.OfType<DataRow>().Select(r => r[0].ToString())));
+				await Context.Channel.SendMessageAsync(string.Join(", ", ds.Tables[0].Rows.OfType<DataRow>().Select(r => r[0].ToString().Replace("###", "'"))));
 			}
 		}
 
 		[Command("remind"), Summary("I will remind you of something you told me before.")]
 		public async Task Remind(string key)
 		{
-			DataSet ds = await FillDataSet($"SELECT * FROM Reminders WHERE key = '{key}'", "Reminders");
+			DataSet ds = await FillDataSet($"SELECT * FROM Reminders WHERE key = '{key.Replace("'", "###")}'", "Reminders");
 			if (ds.Tables[0].Rows.Count > 0)
 			{
 				DataRow dr = ds.Tables[0].Rows[0];
-				await Context.Channel.SendMessageAsync(dr["message"].ToString());
+				await Context.Channel.SendMessageAsync(dr["message"].ToString().Replace("###", "'"));
 			}
 		}
 
 		[Command("addReminder"), Summary("I will remember something for you.")]
 		public async Task AddReminder(string key, string message)
 		{
-			DataSet ds = await FillDataSet($"SELECT * FROM Reminders WHERE key = '{key}'", "Reminders");
+			DataSet ds = await FillDataSet($"SELECT * FROM Reminders WHERE key = '{key.Replace("'", "###")}'", "Reminders");
 			if (ds.Tables[0].Rows.Count > 0)
 			{
 				SQLiteCommand cmd = _con.CreateCommand();
-
 				cmd.CommandText = "UPDATE Reminders SET [message] = @message WHERE [key] = @key;";
-				cmd.Parameters.AddWithValue("@message", message);
-				cmd.Parameters.AddWithValue("@key", key);
+				cmd.Parameters.AddWithValue("@message", message.Replace("'", "###"));
+				cmd.Parameters.AddWithValue("@key", key.Replace("'", "###"));
 
 				await ExecuteCommand(cmd);
 			}
 			else
 			{
 				SQLiteCommand cmd = _con.CreateCommand();
-				cmd.CommandText = $"INSERT INTO Reminders([key],[message])Values('{key}','{message}')";
+				cmd.CommandText = $"INSERT INTO Reminders([key],[message])Values('{key.Replace("'", "###")}','{message.Replace("###", "'")}')";
 				await ExecuteCommand(cmd);
 			}
 		}
@@ -97,7 +96,7 @@ namespace BeyDiscordBot.Modules
 			SQLiteCommand cmd = _con.CreateCommand();
 
 			cmd.CommandText = "DELETE FROM Reminders WHERE [key] = @key";
-			cmd.Parameters.AddWithValue("@key", key);
+			cmd.Parameters.AddWithValue("@key", key.Replace("'", "###"));
 
 			await ExecuteCommand(cmd);
 		}

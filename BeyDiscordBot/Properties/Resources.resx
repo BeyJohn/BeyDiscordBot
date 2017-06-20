@@ -124,4 +124,7 @@
   <data name="science" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\science.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Token" xml:space="preserve">
+    <value>MzA3Mjk5MTI0NjM2ODExMjY0.C-vblA.Gnt6IYLu1aIspygOdyyR0acSEA0</value>
+  </data>
 </root>
